@@ -1,0 +1,34 @@
+Vagrant.configure("2") do |config|
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  ## Nodes
+  nodes =1
+  rangeofips = 149
+  (1..nodes).each do |n|
+     
+    vmip   = "192.168.56.#{rangeofips + n.to_i}"
+    name = "vagrant0#{n}.local"
+    puts "Let's talk about %s." % name
+    ## Node Conf
+    config.vm.define name do |cfg|
+      cfg.vm.box = name
+      cfg.vm.host_name = name
+      ## Comment public network to disable bridge
+      cfg.vm.network :public_network
+      cfg.vm.network :private_network, ip: vmip
+	    cfg.ssh.forward_agent = true
+	    cfg.vm.provider "virtualbox" do |vb|
+        ## headless or non headless machine
+        vb.gui = false
+      end
+
+      ## Ansible Provisioning
+      cfg.vm.provision :ansible do |ansible|
+ 	      ansible.playbook = "Vagrant-provision.yml"
+	      ## Debugging
+    	  ansible.verbose =  true
+	      ansible.verbose="vvvvv"
+      end
+    end
+  end
+end

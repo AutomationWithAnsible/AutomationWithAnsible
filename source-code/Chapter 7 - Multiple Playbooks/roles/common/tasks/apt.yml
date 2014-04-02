@@ -1,0 +1,17 @@
+---
+  - name : Update apt cache
+    apt  : 
+       update_cache=yes
+
+  - name : apt upgrade
+    apt : 
+       upgrade=yes
+
+  - name : apt dist
+    apt : 
+       upgrade=dist
+
+  - name: install ntp packages
+    apt:
+       pkg=ntp 
+       state=present

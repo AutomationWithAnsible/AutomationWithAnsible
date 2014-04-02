@@ -1,0 +1,6 @@
+delete_default_vhost: false
+user: www-data
+worker_processes: 4 
+pid: /var/run/nginx.pid
+worker_connections: 768
+httpPort: 80

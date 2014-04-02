@@ -1,0 +1,25 @@
+---
+  - name: Install nginx and php-fpm 
+    apt: 
+       pkg="{{item}}"
+       state=present
+    with_items:
+       - nginx
+       - php5-fpm
+    notify:
+       - restart nginx
+
+  - name: write nginx.conf
+    template: 
+       src=nginx.conf.j2
+       dest=/etc/nginx/nginx.conf
+    notify:
+       - restart nginx
+
+  - name: write my default site conf
+    template: 
+       src=default.j2
+       dest=/etc/nginx/sites-enabled/default
+    notify: 
+       - restart nginx
+       - restart php5-fpm

@@ -1,0 +1,42 @@
+---
+#
+# This playbook deploys your keys to the vagrant
+#
+
+- name: Provision my keys
+  hosts: all
+  sudo: True
+  vars:
+    localuser: "{{ lookup('ENV','USER') }}"
+    mypassword : "$5$rounds=110000$Jm.keFgd6zfXrnvJ$ar4ns4Y/Vds32qqet19KlR3evMgRkdTjoIf3eL7zBd7" ## password is vagrant only creates password if you dont have keys
+  tasks:
+    - name: Create your local user
+      user:
+        name="{{localuser}}"
+        home="/home/{{localuser}}"
+        shell="/bin/bash"
+        append="true"
+        group="admin"
+        comment="{{localuser}}"
+
+    - name: check keys
+      stat:
+         path="~/.ssh/id_rsa.pub"
+         get_md5=no
+         follow=yes
+      register: mypubkey
+      sudo_user: "{{localuser}}"
+      connection: local
+
+    - name: Putting you authorized_key
+      authorized_key:
+        key="{{lookup('file', '~/.ssh/id_rsa.pub')}}"
+        user="{{localuser}}"
+        manage_dir=yes
+      when: "mypubkey.stat.exists == True"
+
+    - name: Create password as you are not using keys
+      user:
+        name="{{localuser}}"
+        password="{{mypassword}}"
+      when: "mypubkey.stat.exists == False"

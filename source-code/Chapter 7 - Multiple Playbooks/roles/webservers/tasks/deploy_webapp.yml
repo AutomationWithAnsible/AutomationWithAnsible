@@ -1,0 +1,8 @@
+---
+  - name: Copy files
+    copy: 
+       src="{{item}}"
+       dest="/usr/share/nginx/www/{{item}}"
+     with_items:
+        - index.html 
+        - myapp.php

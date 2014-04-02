@@ -1,0 +1,12 @@
+---
+ - name: restart nginx
+   service: 
+      name=nginx
+      state=restarted
+      enabled=yes
+
+ - name: restart php5-fpm 
+   service: 
+      name=php5-fpm 
+      state=restarted
+      enabled=yes

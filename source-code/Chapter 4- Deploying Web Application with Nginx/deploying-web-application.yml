@@ -1,0 +1,59 @@
+---
+- hosts: all
+  sudo: True
+  vars:
+    delete_default_vhost: false
+    user: www-data
+    worker_processes: 4 
+    pid: /var/run/nginx.pid
+    worker_connections: 768
+    httpPort: 80
+
+  tasks:
+    - name: update cache
+      apt:  
+         update_cache=yes
+
+    - name: Install nginx and php-fpm 
+      apt: 
+         pkg="{{item}}" 
+         state=present
+      with_items:
+         - nginx
+         - php5-fpm
+
+    - name: write nginx.conf
+      template: 
+         src=nginx.conf.j2
+         dest=/etc/nginx/nginx.conf
+      notify:
+         - restart nginx
+
+    - name: write my default site conf
+      template: 
+         src=default.j2
+         dest=/etc/nginx/sites-enabled/default
+      notify:
+         - restart nginx
+         - restart php5-fpm
+
+    - name: Copy files
+      copy: 
+         src="{{item}}"
+         dest="/usr/share/nginx/www/{{item}}"
+      with_items:
+         - index.html 
+         - myapp.php
+
+  handlers:
+    - name: restart nginx
+      service: 
+         name=nginx
+         state=restarted
+         enabled=yes
+
+    - name: restart php5-fpm 
+      service: 
+         name=php5-fpm 
+         state=restarted
+         enabled=yes
