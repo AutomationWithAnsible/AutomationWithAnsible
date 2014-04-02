@@ -18,11 +18,19 @@ Examples that are given in this book are in the */source-code/* folder.
 #Possible Next Chapters - TODO
 
 If you have any other suggestion, please do not hesitate.
+Possible next chapters:
 	
-	• Multi platfrom example - ubuntu & redhat based systems
+	• Multi platfrom example - (e.g.ubuntu & redhat based systems)
 	• Module Development
 	• Variable Precedence 
 	• Dynamic Inventory
 	• Ansible Pull
+
+Latex tasks
+
+	• Create EPUB version
+	• Create HTML version
+	
+	
 	
  
