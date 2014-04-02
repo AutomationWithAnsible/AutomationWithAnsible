@@ -44,7 +44,7 @@
 
 
 \newcommand{\thetitle}{Automation with Ansible}
-\newcommand{\theversion}{0.1.0}
+\newcommand{\theversion}{0.1.1}
 \newcommand{\thedate}{April 2014}
 
 \title{\thetitle}
@@ -58,7 +58,8 @@
 \newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} \nameref*{#1}}} 
 
 \definecolor{NoteBackgroundColor}{RGB}{250,250,250}
-\definecolor{NoteLineColor}{RGB}{216,216,216}
+\definecolor{NoteLineColor}{RGB}{216,216,216}
+
 \mdfdefinestyle{noteStyle}{%
 rightline=true,
 innerleftmargin=10,innerrightmargin=10,innerbottommargin=10,innertopmargin=0,
@@ -203,10 +204,14 @@ License, which is available at
 The original form of this book is \LaTeX\ source code.  Compiling this
 \LaTeX\ source has the effect of generating a device-independent
 representation of a textbook, which can be converted to other formats
-and printed. The \LaTeX\ source for this book is available from
+and printed. 
+
+The \LaTeX\ source that is used in this book is taken from \emph{Think Python} book.
 \\
 \\
-\url{http://www.url-comes-here.com}
+\url{http://www.greenteapress.com/thinkpython/thinkpython.html}
+
+
 
 % ------------------------------ 
 %  COPYRIGHT - END
@@ -518,7 +523,7 @@ section.
 You can find the source code of examples that are given in this book 
 in the same repository as this book:
 
-\url{https://github.com/}
+\url{https://github.com/AutomationWithAnsible/book}
 
 Under folder \emph{source-code} you can find the examples that corresponds to 
 chapter number and name.
@@ -630,7 +635,7 @@ have any server that you can test please refer to \emph{Appendix \fullref{append
 \end{mdframed}
  % ---- NOTE ENDS ---- 
 
-
+
 In the example above \emph{-i} means inventory, this is where you specify your target server. 
 You can also specify more than one server by adding them after comma (,). The \emph{-m} stands for module name, 
 meaning module that will be executed is the \emph{ping} module. We will be using modules a lot and in
