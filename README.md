@@ -1,4 +1,4 @@
-Ansible Book
+Automation with Ansible - Open Source Ansible Book Project
 =========================
 
 This is an open source ansible book project. You can download PDF version of the book from under root directory called **Automation with Ansible.pdf**
