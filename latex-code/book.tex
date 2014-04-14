@@ -32,7 +32,6 @@
 \usepackage{wrapfig,lipsum} 
 \usepackage{mdframed}
 
-
 % ------------------------------ 
 % PACKAGES - END
 % ------------------------------
@@ -44,7 +43,7 @@
 
 
 \newcommand{\thetitle}{Automation with Ansible}
-\newcommand{\theversion}{0.1.1}
+\newcommand{\theversion}{0.1.2}
 \newcommand{\thedate}{April 2014}
 
 \title{\thetitle}
@@ -77,6 +76,18 @@ linecolor=NoteLineColor,linewidth=1pt}
 
 \newif\ifplastex
 \plastexfalse
+
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight%
+]{figures/cover.eps}%
+\vfill
+}}}
+
 
 \begin{document}
 
@@ -122,26 +133,11 @@ linecolor=NoteLineColor,linewidth=1pt}
 %-half title--------------------------------------------------
 \thispagestyle{empty}
 
-\begin{flushright}
-\vspace*{2.0in}
+\AddToShipoutPicture*{\BackgroundPic}
 
-\begin{spacing}{3}
-{\huge \thetitle}\\
-\end{spacing}
-
-\vspace{0.25in}
-
-Version \theversion
-
-\thedate
-
-\vfill
-
-\end{flushright}
 
 %--verso------------------------------------------------------
 
-\blankpage
 \blankpage
 
 
