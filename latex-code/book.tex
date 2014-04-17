@@ -2306,7 +2306,199 @@ as well as running a playbook against several servers.
 % Beginning of a chapter
 % ------------------------------
 
+\chapter{Case Study : Ansible Configuration}
+\label{chapter:ansible-configuration}
+Until this chapter, every single example we have made was with out-of-box 
+configuration. However there will be times, for example next chapter, 
+where you need to change the default configuration to control ansible' work 
+flow. In this chapter we will give small hints regarding ansible configuration 
+and how can it be changed to fit in your workflow.
+
+
+\section{ansible.cfg File}
+ When ansible runs, it loads bunch of configuration parameter from a file called \emph{ansible.cfg}.
+ This is an INI file, which content of it looks like this:
  
+ 
+ \begin{verbatim}
+ 
+...
+
+[defaults]
+
+# some basic default values...
+
+hostfile       = /etc/ansible/hosts
+library        = /usr/share/ansible
+remote_tmp     = $HOME/.ansible/tmp
+pattern        = *
+forks          = 5
+poll_interval  = 15
+sudo_user      = root
+#ask_sudo_pass = True
+#ask_pass      = True
+transport      = smart
+remote_port    = 22
+....
+
+ \end{verbatim}
+ 
+
+The example above is only small part of a configuration of ansible. We will not 
+explain every single parameter that can be configured, but we will give some 
+important tips about how it can make your life much more easier.
+
+\subsection{Config File Location and Order}
+Ansible offers relatively easy way to configure it self. You could load 
+configuration from different location as well as as Environment Variable. By 
+default configuration is sane, so you will probably not need to change a lot. 
+However in case if you have to, we will show you how to do it.
+
+To begin with, ansible can load the configuration file from following 
+directories in respected order. First configuration file that is found will be 
+used.
+
+\begin{itemize}
+\item ANSIBLE\_CONFIG : This is a environment variable that points to a configuration file. It might be helpful
+for dynamically loading configuration file.
+
+\item  CWD : Current working directory, this might be useful for some 
+configuration belongs to certain playbooks.
+
+\item HOME : User home directory, this might be useful for some 
+configuration that belongs only to you. Settings in here might be much more 
+generic and not so much of server related configuration. Ansible looks for the \emph{.ansible.cfg} 
+file.
+
+\item /etc/ansible/ansible.cfg : Those configuration that are used system wide can be placed in 
+this location.
+\end{itemize}
+
+
+\subsection{Loading and Using Configuration}
+Ansible does not discard all the default variables when it loads a configuration file. 
+For instance, if you put the following configuration file in your working 
+directory and execute the \emph{ansible}, what will happen is, ansible will load 
+the configuration file and it will overwrite only default module name and 
+everything else will be the same.
+
+\begin{verbatim}
+
+[defaults]
+module_name    = ping
+
+\end{verbatim}
+
+You can test this with following command, add the configuration file in a 
+directory, and open it in your terminal, when you execute the following command 
+you can see the it uses \emph{ping} module as default module.
+
+\begin{verbatim}
+
+ansible -i 192.168.56.150,  all
+
+\end{verbatim}
+
+
+
+\section{Environment Variables}
+You could also set some of the configuration via environment variables. Because 
+environment variables has the highest precedence it will be used by the ansible 
+instead of other variables that are set in your configuration file. For instance 
+when you are using roles, and you want your roles to be in a single directory, 
+one of the best way to manage them is to set \emph{ANSIBLE\_ROLES\_PATH} variable. 
+By default this is set to \emph{/etc/ansible/roles}. Soon as you change this 
+value, all roles will be installed(via ansible-galaxy) to directory you have set 
+and when ansible looks for roles it will checkout the directory you have 
+specified to find out whether roles are located under there or not. 
+
+\subsection{Examples}
+\subsubsection{Multiple Role Directories}
+To begin with, here is simply how you can set the environment variable for 
+roles.
+
+\begin{verbatim}
+  
+  export ANSIBLE_ROLES_PATH=path/to/your/roles
+  
+\end{verbatim}
+
+Another possibility which is also might help you is to have multiple directories 
+for roles, you might use this for public(open-source) and private roles, which might be the 
+case if you are not allowed to disclose some of your roles. In following example, 
+we give two directories to the \emph{export} build-in command. Which means 
+ansible will look under both directories for roles.
+
+\begin{verbatim}
+  
+  export ANSIBLE_ROLES_PATH=/path/to/your/roles/public:/path/to/your/roles/private
+   
+\end{verbatim}
+
+
+ % ---- NOTE BEGINS ---- 
+\begin{mdframed}[style=noteStyle]
+\begin{minipage}[b]{0.05\textwidth}
+\begin{figure}[H]
+\includegraphics[width=0.9\textwidth]{figures/notes-icon.eps} 
+\end{figure}
+\end{minipage}  
+\begin{minipage}[b]{0.05\textwidth}
+\textbf{Note}
+\end{minipage}
+
+Environment variables are not persistent, once the session is terminated the 
+values that you have set will be lost. Therefore, if you want to make it 
+persistent you have to add that in to your bash profile. You can find your bash 
+profile under your home directory  \emph{~/.bash\_profile}
+\end{mdframed}
+ % ---- NOTE ENDS ---- 
+ 
+ 
+
+\subsubsection{Host Files}
+TBA
+
+\begin{verbatim}
+  
+  export ANSIBLE_HOSTS=/path/to/inventory
+   
+\end{verbatim}
+
+
+
+\subsubsection{Logging}
+In case if you want to activate logging, you can either add a location for you 
+log files into your ansible configuration file or you can add an environment 
+variable. Following example, will allow ansibe to generate a log file under defined directory, 
+based on date. When ansible notices this log directory it will log information about executions at the designated 
+location.
+
+\begin{verbatim}
+  
+  export ANSIBLE_LOG_PATH=/path/to/your/logs/ansible-$(date '+%Y-%m-%d').log
+   
+\end{verbatim}
+
+
+
+\section{Additional Information}
+In following URLs you can find additional information regarding ansible 
+configuration. Following links points to python file that is used in ansible, 
+which can give you an insight to configuration and values that are exist.
+
+\url{https://github.com/ansible/ansible/blob/devel/lib/ansible/constants.py}
+
+Following link is from ansible website, which is a detailed information about 
+what kind of arguments can be configured and what they are used for.
+
+\url{http://docs.ansible.com/intro_configuration.html}
+
+
+
+\section{Up Shot}
+TBA
+
 % ------------------------------
 % End of chapter
 % ------------------------------
