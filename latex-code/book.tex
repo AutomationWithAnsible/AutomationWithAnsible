@@ -2308,7 +2308,7 @@ as well as running a playbook against several servers.
 
 \chapter{Case Study : Ansible Configuration}
 \label{chapter:ansible-configuration}
-Until this chapter, every single example we have made was with out-of-box 
+Until this chapter, every single example we have made we used out-of-box 
 configuration. However there will be times, for example next chapter, 
 where you need to change the default configuration to control ansible' work 
 flow. In this chapter we will give small hints regarding ansible configuration 
@@ -2391,7 +2391,8 @@ module_name    = ping
 
 You can test this with following command, add the configuration file in a 
 directory, and open it in your terminal, when you execute the following command 
-you can see the it uses \emph{ping} module as default module.
+you can see the it uses \emph{ping} module as default module. As you will 
+remember default module that ships with ansible is \emph{command} module.
 
 \begin{verbatim}
 
@@ -2457,7 +2458,9 @@ profile under your home directory  \emph{~/.bash\_profile}
  
 
 \subsubsection{Host Files}
-TBA
+Despite most of the times your inventory file might accompany your playbook, it 
+is well possible that you have different inventory file or a dynamicly generated 
+one, therefore following example might be useful.  
 
 \begin{verbatim}
   
@@ -2497,7 +2500,8 @@ what kind of arguments can be configured and what they are used for.
 
 
 \section{Up Shot}
-TBA
+In this chapter we have shortly introduced how ansible configuration can be 
+altered and used.
 
 % ------------------------------
 % End of chapter
